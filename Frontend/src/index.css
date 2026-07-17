@@ -117,6 +117,70 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+
+
+
+@theme {
+  /* ---------------------------------- */
+  /* Fonts                              */
+  /* ---------------------------------- */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+
+  /* ---------------------------------- */
+  /* Background colors (Warm Slate Light)*/
+  /* ---------------------------------- */
+  --color-bg-primary: #f9fafb;      /* Soft, clean off-white canvas */
+  --color-bg-secondary: #ffffff;    /* Card items, feed boxes, dropdown menus */
+  --color-bg-tertiary: #f3f4f6;     /* Subtle button backs / hover gray */
+  --color-bg-inverse: #111827;      /* Dark slate for popovers/toasts */
+
+  /* ---------------------------------- */
+  /* Text colors                        */
+  /* ---------------------------------- */
+  --color-text-primary: #111827;    /* Ink black for primary headers and text */
+  --color-text-secondary: #4b5563;  /* Subtitles, post details, paragraphs */
+  --color-text-muted: #6b7280;      /* Metadata, timestamps, placeholders */
+  --color-text-inverse: #ffffff;    /* Light text on top of purple buttons */
+
+  /* ---------------------------------- */
+  /* Border colors                      */
+  /* ---------------------------------- */
+  --color-border-primary: #e5e7eb;  /* Clean, light component dividers */
+  --color-border-secondary: #d1d5db;/* Input fields / explicit dividers */
+  --color-border-focus: #7c3aed;    /* Form element focus rings */
+
+  /* ---------------------------------- */
+  /* Brand / Accent colors (Amethyst)   */
+  /* ---------------------------------- */
+  --color-accent-primary: #7c3aed;   /* Violet 600 - Confident, tech-forward premium accent */
+  --color-accent-secondary: #6d28d9; /* Purple 700 - Slightly deeper variant for contrast */
+  --color-accent-primary-hover: #6d28d9;
+  --color-accent-secondary-hover: #5b21b6;
+
+  /* ---------------------------------- */
+  /* Semantic / status colors           */
+  /* ---------------------------------- */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+
+  /* ---------------------------------- */
+  /* Radius                             */
+  /* ---------------------------------- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* ---------------------------------- */
+  /* Shadows                            */
+  /* ---------------------------------- */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 20px -5px rgb(124 58 237 / 0.15);
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;

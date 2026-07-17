@@ -134,13 +134,13 @@ export const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="grid h-[calc(100vh-4rem)] md:h-screen grid-cols-1 md:grid-cols-3 xl:grid-cols-4 bg-[#0B0F19]">
+<div className="grid h-[calc(100vh-4rem)] md:h-screen grid-cols-1 md:grid-cols-3 xl:grid-cols-4 bg-bg-primary">
       {/* Column 1: Master Sessions Index Feed */}
       <div
-        className={`flex flex-col border-r border-slate-800/60 ${activeSession ? "hidden md:flex" : "flex"} md:col-span-1`}
+        className={`flex flex-col border-r border-border-primary ${activeSession ? "hidden md:flex" : "flex"} md:col-span-1`}
       >
-        <div className="p-4 border-b border-slate-800/60">
-          <h1 className="text-lg font-bold text-slate-100 tracking-tight">
+        <div className="p-4 border-b border-border-primary">
+          <h1 className="text-lg font-bold text-text-primary tracking-tight">
             Messages
           </h1>
         </div>
@@ -163,11 +163,11 @@ export const ChatInterface: React.FC = () => {
         {activeSession ? (
           <>
             {/* Thread Header Toolbar */}
-            <header className="flex h-14 items-center justify-between border-b border-slate-800/60 bg-[#0B0F19]/80 px-4 backdrop-blur-md">
+            <header className="flex h-14 items-center justify-between border-b border-border-primary bg-bg-primary/80 px-4 backdrop-blur-md">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setActiveSession(null)}
-                  className="text-xs text-slate-500 hover:text-slate-300 md:hidden"
+                  className="text-xs text-text-muted hover:text-text-secondary md:hidden"
                 >
                   Back
                 </button>
@@ -175,29 +175,29 @@ export const ChatInterface: React.FC = () => {
                   <img
                     src={activeSession.participant.avatarUrl}
                     alt={activeSession.participant.displayName}
-                    className="h-9 w-9 rounded-full object-cover"
+                    className="h-9 w-9 rounded-full object-cover border border-border-primary"
                   />
                   {activeSession.isOnline && (
-                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-[#0B0F19] bg-emerald-500" />
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-bg-primary bg-success" />
                   )}
                 </div>
                 <div>
-                  <h2 className="text-sm font-semibold text-slate-200 leading-tight">
+                  <h2 className="text-sm font-semibold text-text-primary leading-tight">
                     {activeSession.participant.displayName}
                   </h2>
-                  <p className="text-[10px] text-slate-500">
+                  <p className="text-[10px] text-text-muted">
                     {activeSession.isOnline ? "Active now" : "Offline"}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 text-slate-400">
-                <button className="hover:text-cyan-400 transition">
+              <div className="flex items-center gap-3 text-text-muted">
+                <button className="hover:text-accent-primary transition-colors">
                   <Phone className="h-4 w-4" />
                 </button>
-                <button className="hover:text-cyan-400 transition">
+                <button className="hover:text-accent-primary transition-colors">
                   <Video className="h-4 w-4" />
                 </button>
-                <button className="hover:text-cyan-400 transition">
+                <button className="hover:text-accent-primary transition-colors">
                   <Info className="h-4 w-4" />
                 </button>
               </div>
@@ -219,15 +219,15 @@ export const ChatInterface: React.FC = () => {
                       <div
                         className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                           isMe
-                            ? "bg-gradient-to-r from-cyan-600 to-indigo-600 text-slate-950 font-medium"
-                            : "bg-slate-900 border border-slate-800/80 text-slate-200"
+                            ? "bg-gradient-to-r from-accent-primary to-indigo-600 text-bg-primary font-medium"
+                            : "bg-bg-secondary border border-border-primary text-text-secondary"
                         }`}
                       >
                         {msg.content}
 
                         {/* Direct Media Shared Image Node Embed */}
                         {msg.mediaUrl && (
-                          <div className="mt-2 overflow-hidden rounded-xl border border-slate-800/40 max-w-xs">
+                          <div className="mt-2 overflow-hidden rounded-xl border border-border-primary max-w-xs">
                             <img
                               src={msg.mediaUrl}
                               alt="Shared content visual payload"
@@ -238,7 +238,7 @@ export const ChatInterface: React.FC = () => {
                       </div>
 
                       {/* Timestamp Subtitle metadata label */}
-                      <span className="mt-1 text-[9px] text-slate-600 px-1">
+                      <span className="mt-1 text-[9px] text-text-muted px-1">
                         {msg.timestamp}
                       </span>
                     </div>
@@ -248,10 +248,10 @@ export const ChatInterface: React.FC = () => {
 
               {/* Typing Animation Pipeline State Mock Render */}
               {isTyping && (
-                <div className="flex items-center gap-2 text-slate-500 text-xs italic px-1">
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-600" />
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-600 [animation-delay:0.2s]" />
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-600 [animation-delay:0.4s]" />
+                <div className="flex items-center gap-2 text-text-muted text-xs italic px-1">
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-border-primary" />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-border-primary [animation-delay:0.2s]" />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-border-primary [animation-delay:0.4s]" />
                   <span>
                     {activeSession.participant.displayName} is typing...
                   </span>
@@ -260,27 +260,27 @@ export const ChatInterface: React.FC = () => {
             </div>
 
             {/* Input Action Bottom Form Layer */}
-            <footer className="p-4 border-t border-slate-800/60 bg-[#0B0F19]">
+            <footer className="p-4 border-t border-border-primary bg-bg-primary">
               <form
                 onSubmit={handleSendMessage}
                 className="flex items-center gap-3"
               >
-                <div className="flex items-center gap-1.5 text-slate-500">
+                <div className="flex items-center gap-1.5 text-text-muted">
                   <button
                     type="button"
-                    className="rounded-full p-2 hover:bg-slate-900 hover:text-cyan-400 transition"
+                    className="rounded-full p-2 hover:bg-bg-secondary hover:text-accent-primary transition-colors"
                   >
                     <Paperclip className="h-4 w-4" />
                   </button>
                   <button
                     type="button"
-                    className="rounded-full p-2 hover:bg-slate-900 hover:text-cyan-400 transition"
+                    className="rounded-full p-2 hover:bg-bg-secondary hover:text-accent-primary transition-colors"
                   >
                     <Image className="h-4 w-4" />
                   </button>
                   <button
                     type="button"
-                    className="rounded-full p-2 hover:bg-slate-900 hover:text-cyan-400 transition"
+                    className="rounded-full p-2 hover:bg-bg-secondary hover:text-accent-primary transition-colors"
                   >
                     <Smile className="h-4 w-4" />
                   </button>
@@ -291,13 +291,13 @@ export const ChatInterface: React.FC = () => {
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder={`Message ${activeSession.participant.displayName}...`}
-                  className="flex-1 rounded-xl border border-slate-800 bg-slate-900/40 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none focus:border-cyan-500/40 focus:ring-1 focus:ring-cyan-500/40 transition"
+                  className="flex-1 rounded-xl border border-border-secondary bg-bg-secondary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-border-focus transition"
                 />
 
                 <button
                   type="submit"
                   disabled={!inputText.trim()}
-                  className="rounded-xl bg-cyan-500 p-2.5 text-slate-950 transition hover:bg-cyan-400 disabled:bg-slate-900 disabled:text-slate-600"
+                  className="rounded-xl bg-accent-primary p-2.5 text-bg-primary transition hover:opacity-90 disabled:bg-bg-tertiary disabled:text-text-muted"
                 >
                   <Send className="h-4 w-4" />
                 </button>
@@ -305,10 +305,9 @@ export const ChatInterface: React.FC = () => {
             </footer>
           </>
         ) : (
-          <div className="flex flex-1 flex-col items-center justify-center text-sm text-slate-500">
+          <div className="flex flex-1 flex-col items-center justify-center text-sm text-text-muted">
             <span>
-              Select a conversation thread index from the panel to begin
-              chatting.
+              Select a conversation thread index from the panel to begin chatting.
             </span>
           </div>
         )}

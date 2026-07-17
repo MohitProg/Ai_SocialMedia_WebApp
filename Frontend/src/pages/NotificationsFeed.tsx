@@ -60,12 +60,12 @@ export const NotificationsFeed: React.FC = () => {
   };
 
   return (
-    <div className="flex w-full flex-col">
-      <header className="sticky top-0 z-30 flex h-14 w-full items-center justify-between border-b border-slate-800/60 bg-[#0B0F19]/80 px-4 backdrop-blur-md">
-        <h1 className="text-lg font-bold text-slate-100 tracking-tight">Notifications</h1>
+<div className="flex w-full flex-col bg-bg-primary">
+      <header className="sticky top-0 z-30 flex h-14 w-full items-center justify-between border-b border-border-primary bg-bg-primary/80 px-4 backdrop-blur-md">
+        <h1 className="text-lg font-bold text-text-primary tracking-tight">Notifications</h1>
         <button 
           onClick={handleMarkAllAllRead}
-          className="flex items-center gap-1.5 rounded-xl border border-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-400 hover:bg-slate-900 hover:text-slate-200 transition"
+          className="flex items-center gap-1.5 rounded-xl border border-border-primary px-3 py-1.5 text-xs font-semibold text-text-muted hover:bg-bg-secondary hover:text-text-secondary transition"
         >
           <CheckCheck className="h-3.5 w-3.5" />
           <span>Mark all as read</span>
@@ -78,8 +78,8 @@ export const NotificationsFeed: React.FC = () => {
             <NotificationItem key={n.id} notification={n} onMarkRead={handleMarkRead} />
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center py-24 text-slate-500 gap-2">
-            <Sparkles className="h-6 w-6 text-slate-700" />
+          <div className="flex flex-col items-center justify-center py-24 text-text-muted gap-2">
+            <Sparkles className="h-6 w-6 text-border-primary" />
             <p className="text-sm">You are completely caught up!</p>
           </div>
         )}

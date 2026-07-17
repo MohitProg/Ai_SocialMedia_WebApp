@@ -44,18 +44,18 @@ export const UserProfile: React.FC = () => {
   };
 
   return (
-    <div className="w-full text-slate-100">
+<div className="w-full text-text-primary bg-bg-primary">
       
       {/* Dynamic Header Toolbar */}
-      <div className="sticky top-0 z-30 flex h-14 items-center gap-6 border-b border-slate-800/60 bg-[#0B0F19]/80 px-4 backdrop-blur-md">
+      <div className="sticky top-0 z-30 flex h-14 items-center gap-6 border-b border-border-primary bg-bg-primary/80 px-4 backdrop-blur-md">
         <div>
           <h1 className="text-base font-bold leading-tight">{user.displayName}</h1>
-          <p className="text-xs text-slate-500">{MOCK_USER_POSTS.length} Posts</p>
+          <p className="text-xs text-text-muted">{MOCK_USER_POSTS.length} Posts</p>
         </div>
       </div>
 
       {/* Profile Decorative Background Banner */}
-      <div className="h-36 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-cyan-950/30 border-b border-slate-800/40" />
+      <div className="h-36 bg-gradient-to-r from-bg-secondary via-indigo-950/20 to-accent-primary/5 border-b border-border-primary" />
 
       {/* Meta Profile Grid Detail Layout */}
       <div className="px-4 pb-4">
@@ -65,14 +65,14 @@ export const UserProfile: React.FC = () => {
             <img
               src={user.avatarUrl}
               alt={user.displayName}
-              className="h-24 w-24 rounded-full border-4 border-[#0B0F19] object-cover shadow-xl"
+              className="h-24 w-24 rounded-full border-4 border-bg-primary object-cover shadow-xl"
             />
           </div>
           
           {/* Action Trigger Button */}
           <button
             onClick={() => setIsEditModalOpen(true)}
-            className="rounded-full border border-slate-800 px-4 py-1.5 text-xs font-bold text-slate-200 hover:bg-slate-900 transition-colors"
+            className="rounded-full border border-border-primary px-4 py-1.5 text-xs font-bold text-text-secondary hover:bg-bg-secondary transition-colors"
           >
             Edit Profile
           </button>
@@ -81,17 +81,17 @@ export const UserProfile: React.FC = () => {
         {/* User Descriptive Text Layer */}
         <div className="mt-3">
           <div className="flex items-center gap-1.5">
-            <h2 className="text-lg font-bold tracking-tight text-slate-100">{user.displayName}</h2>
-            {user.isVerified && <span className="h-2 w-2 rounded-full bg-cyan-500" title="Verified Architect" />}
+            <h2 className="text-lg font-bold tracking-tight text-text-primary">{user.displayName}</h2>
+            {user.isVerified && <span className="h-2 w-2 rounded-full bg-accent-primary" title="Verified Architect" />}
           </div>
-          <p className="text-xs text-slate-500">@{user.username}</p>
+          <p className="text-xs text-text-muted">@{user.username}</p>
         </div>
 
         {/* Main Biography Body Text */}
-        {user.bio && <p className="mt-3 text-sm leading-relaxed text-slate-300">{user.bio}</p>}
+        {user.bio && <p className="mt-3 text-sm leading-relaxed text-text-secondary">{user.bio}</p>}
 
         {/* Profile Meta Links/Attributes Row */}
-        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-slate-500">
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-text-muted">
           {user.location && (
             <div className="flex items-center gap-1">
               <MapPin className="h-3.5 w-3.5" />
@@ -99,7 +99,7 @@ export const UserProfile: React.FC = () => {
             </div>
           )}
           {user.website && (
-            <div className="flex items-center gap-1 text-cyan-400 hover:underline cursor-pointer">
+            <div className="flex items-center gap-1 text-accent-primary hover:underline cursor-pointer">
               <LinkIcon className="h-3.5 w-3.5" />
               <span>{user.website}</span>
             </div>
@@ -112,26 +112,26 @@ export const UserProfile: React.FC = () => {
 
         {/* Count Configurations */}
         <div className="mt-3.5 flex items-center gap-4 text-xs">
-          <div className="cursor-pointer hover:underline text-slate-400">
-            <span className="font-semibold text-slate-200">{user.followingCount}</span> Following
+          <div className="cursor-pointer hover:underline text-text-secondary">
+            <span className="font-semibold text-text-primary">{user.followingCount}</span> Following
           </div>
-          <div className="cursor-pointer hover:underline text-slate-400">
-            <span className="font-semibold text-slate-200">{user.followersCount}</span> Followers
+          <div className="cursor-pointer hover:underline text-text-secondary">
+            <span className="font-semibold text-text-primary">{user.followersCount}</span> Followers
           </div>
         </div>
       </div>
 
       {/* Content Navigation Segmented Control Tabs */}
-      <div className="flex border-b border-slate-800/60 text-sm">
+      <div className="flex border-b border-border-primary text-sm">
         {(['posts', 'media', 'likes'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className="relative flex flex-1 items-center justify-center py-3.5 font-semibold capitalize transition"
           >
-            <span className={activeTab === tab ? 'text-slate-100' : 'text-slate-500'}>{tab}</span>
+            <span className={activeTab === tab ? 'text-text-primary' : 'text-text-muted'}>{tab}</span>
             {activeTab === tab && (
-              <div className="absolute bottom-0 h-[2px] w-16 bg-cyan-500 rounded-full" />
+              <div className="absolute bottom-0 h-[2px] w-16 bg-accent-primary rounded-full" />
             )}
           </button>
         ))}
@@ -145,15 +145,15 @@ export const UserProfile: React.FC = () => {
 
         {activeTab === 'media' && (
           <div className="grid grid-cols-3 gap-1 p-1">
-            <div className="aspect-square bg-slate-900/40 border border-slate-800/40 flex items-center justify-center text-xs text-slate-600">
+            <div className="aspect-square bg-bg-secondary border border-border-primary flex items-center justify-center text-xs text-text-muted">
               <Image className="h-5 w-5" />
             </div>
           </div>
         )}
 
         {activeTab === 'likes' && (
-          <div className="flex flex-col items-center justify-center py-12 text-sm text-slate-500 gap-2">
-            <Heart className="h-5 w-5 text-slate-700" />
+          <div className="flex flex-col items-center justify-center py-12 text-sm text-text-muted gap-2">
+            <Heart className="h-5 w-5 text-border-primary" />
             <span>No liked items to display yet</span>
           </div>
         )}

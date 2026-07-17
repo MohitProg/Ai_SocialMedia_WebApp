@@ -36,7 +36,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <article className="border-b border-slate-800/60 bg-[#0B0F19] p-4 transition-colors hover:bg-slate-900/20 sm:p-5">
+<article className="border-b border-border-primary bg-bg-secondary p-4 transition-colors hover:bg-bg-tertiary sm:p-5">
       <div className="flex gap-4">
         
         {/* Avatar Sidebar */}
@@ -44,10 +44,10 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <img 
             src={post.user.avatarUrl} 
             alt={post.user.username} 
-            className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-slate-800"
+            className="h-10 w-10 shrink-0 rounded-full object-cover border border-border-primary"
           />
           {/* Threadline for visual continuity */}
-          <div className="mt-2 w-[2px] grow rounded-full bg-slate-800/40" />
+          <div className="mt-2 w-[2px] grow rounded-full bg-border-primary" />
         </div>
 
         {/* Content Area */}
@@ -55,26 +55,26 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 truncate text-sm">
-              <span className="font-semibold text-slate-100 hover:underline cursor-pointer">
+              <span className="font-semibold text-text-primary hover:underline cursor-pointer">
                 {post.user.displayName}
               </span>
-              <span className="text-slate-500 truncate">@{post.user.username}</span>
-              <span className="text-slate-600">·</span>
-              <span className="text-slate-500">{post.createdAt}</span>
+              <span className="text-text-muted truncate">@{post.user.username}</span>
+              <span className="text-text-muted">·</span>
+              <span className="text-text-muted">{post.createdAt}</span>
             </div>
-            <button className="text-slate-500 hover:text-cyan-400 transition-colors">
+            <button className="text-text-muted hover:text-accent-primary transition-colors">
               <MoreHorizontal className="h-4 w-4" />
             </button>
           </div>
 
           {/* Text Content */}
-          <p className="mt-1 whitespace-pre-wrap text-[15px] leading-relaxed text-slate-200">
+          <p className="mt-1 whitespace-pre-wrap text-[15px] leading-relaxed text-text-secondary">
             {post.content}
           </p>
 
           {/* Optional Media Container */}
           {post.mediaUrl && (
-            <div className="mt-3 overflow-hidden rounded-2xl border border-slate-800/60">
+            <div className="mt-3 overflow-hidden rounded-md border border-border-primary">
               {post.mediaType === 'video' ? (
                 <video src={post.mediaUrl} controls className="w-full max-h-[500px] object-cover" />
               ) : (
@@ -84,21 +84,21 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           )}
 
           {/* Action Bar */}
-          <div className="mt-4 flex items-center justify-between max-w-md text-slate-500">
+          <div className="mt-4 flex items-center justify-between max-w-md text-text-muted">
             {/* Reply */}
             <button 
               onClick={() => setShowComments(!showComments)}
-              className={`flex items-center gap-1.5 group transition-colors ${showComments ? 'text-cyan-400' : 'hover:text-cyan-400'}`}
+              className={`flex items-center gap-1.5 group transition-colors ${showComments ? 'text-accent-primary' : 'hover:text-accent-primary'}`}
             >
-              <div className="rounded-full p-1.5 group-hover:bg-cyan-500/10">
+              <div className="rounded-full p-1.5 group-hover:bg-bg-tertiary">
                 <MessageCircle className="h-4 w-4" />
               </div>
               <span className="text-xs font-medium">{post.commentsCount}</span>
             </button>
 
             {/* Repost */}
-            <button className="flex items-center gap-1.5 group hover:text-emerald-400 transition-colors">
-              <div className="rounded-full p-1.5 group-hover:bg-emerald-500/10">
+            <button className="flex items-center gap-1.5 group hover:text-success transition-colors">
+              <div className="rounded-full p-1.5 group-hover:bg-bg-tertiary">
                 <Repeat2 className="h-4 w-4" />
               </div>
               <span className="text-xs font-medium">{post.sharesCount}</span>
@@ -107,23 +107,23 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             {/* Like */}
             <button 
               onClick={handleLike}
-              className={`flex items-center gap-1.5 group transition-colors ${isLiked ? 'text-rose-500' : 'hover:text-rose-500'}`}
+              className={`flex items-center gap-1.5 group transition-colors ${isLiked ? 'text-danger' : 'hover:text-danger'}`}
             >
               <motion.div 
                 whileTap={{ scale: 0.8 }}
-                className="rounded-full p-1.5 group-hover:bg-rose-500/10"
+                className="rounded-full p-1.5 group-hover:bg-bg-tertiary"
               >
                 <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
               </motion.div>
-              <span className="text-xs font-medium">{likesCount}</span>
+                <span className="text-xs font-medium">{likesCount}</span>
             </button>
 
             {/* Save */}
             <button 
               onClick={() => setIsSaved(!isSaved)}
-              className={`flex items-center gap-1.5 group transition-colors ${isSaved ? 'text-indigo-400' : 'hover:text-indigo-400'}`}
+              className={`flex items-center gap-1.5 group transition-colors ${isSaved ? 'text-info' : 'hover:text-info'}`}
             >
-              <div className="rounded-full p-1.5 group-hover:bg-indigo-500/10">
+              <div className="rounded-full p-1.5 group-hover:bg-bg-tertiary">
                 <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
               </div>
             </button>
@@ -138,11 +138,11 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden"
               >
-                <form onSubmit={submitComment} className="mt-4 flex items-start gap-3 border-t border-slate-800/40 pt-4">
+                <form onSubmit={submitComment} className="mt-4 flex items-start gap-3 border-t border-border-primary pt-4">
                   <img 
                     src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
                     alt="Current user" 
-                    className="h-8 w-8 rounded-full object-cover ring-1 ring-slate-800"
+                    className="h-8 w-8 rounded-full object-cover border border-border-primary"
                   />
                   <div className="relative flex-1">
                     <input 
@@ -150,12 +150,12 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
                       placeholder="Post a reply..."
-                      className="w-full rounded-full border border-slate-800 bg-slate-900/50 py-2 pl-4 pr-10 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"
+                      className="w-full rounded-xl border border-border-secondary bg-bg-primary py-2 pl-4 pr-10 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-border-focus transition-all"
                     />
                     <button 
                       type="submit"
                       disabled={!commentText.trim()}
-                      className="absolute right-1 top-1 rounded-full p-1.5 text-cyan-500 disabled:text-slate-600 hover:bg-cyan-500/10 transition-colors"
+                      className="absolute right-1 top-1 rounded-full p-1.5 text-accent-primary disabled:text-text-muted hover:bg-bg-tertiary transition-colors"
                     >
                       <Send className="h-4 w-4" />
                     </button>

@@ -55,53 +55,53 @@ export const HomeFeed: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'forYou' | 'following'>('forYou');
 
   return (
-    <div className="flex w-full flex-col">
+<div className="flex w-full flex-col font-sans bg-bg-primary text-text-primary">
       
       {/* Sticky Header Tabs */}
-      <header className="sticky top-0 z-30 flex h-14 w-full border-b border-slate-800/60 bg-[#0B0F19]/80 backdrop-blur-md">
+      <header className="sticky top-0 z-30 flex h-14 w-full border-b border-border-primary bg-bg-secondary/80 backdrop-blur-md">
         <button 
           onClick={() => setActiveTab('forYou')}
-          className="relative flex flex-1 items-center justify-center text-sm font-semibold transition-colors hover:bg-slate-800/30"
+          className="relative flex flex-1 items-center justify-center text-sm font-semibold transition-colors hover:bg-bg-tertiary"
         >
-          <span className={activeTab === 'forYou' ? 'text-slate-100' : 'text-slate-500'}>
+          <span className={activeTab === 'forYou' ? 'text-text-primary' : 'text-text-muted'}>
             For You
           </span>
           {activeTab === 'forYou' && (
-            <div className="absolute bottom-0 h-1 w-12 rounded-t-full bg-cyan-500" />
+            <div className="absolute bottom-0 h-1 w-12 rounded-t-full bg-accent-primary" />
           )}
         </button>
         <button 
           onClick={() => setActiveTab('following')}
-          className="relative flex flex-1 items-center justify-center text-sm font-semibold transition-colors hover:bg-slate-800/30"
+          className="relative flex flex-1 items-center justify-center text-sm font-semibold transition-colors hover:bg-bg-tertiary"
         >
-          <span className={activeTab === 'following' ? 'text-slate-100' : 'text-slate-500'}>
+          <span className={activeTab === 'following' ? 'text-text-primary' : 'text-text-muted'}>
             Following
           </span>
           {activeTab === 'following' && (
-            <div className="absolute bottom-0 h-1 w-12 rounded-t-full bg-cyan-500" />
+            <div className="absolute bottom-0 h-1 w-12 rounded-t-full bg-accent-primary" />
           )}
         </button>
       </header>
 
-      {/* Quick Compose Area (Desktop specific logic handled in AppShell usually, but good here too) */}
-      <div className="hidden border-b border-slate-800/60 p-4 sm:flex gap-4">
+      {/* Quick Compose Area */}
+      <div className="hidden border-b border-border-primary p-4 sm:flex gap-4 bg-bg-secondary">
         <img 
           src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
           alt="User avatar" 
-          className="h-10 w-10 rounded-full object-cover ring-1 ring-slate-800"
+          className="h-10 w-10 rounded-full object-cover border border-border-primary"
         />
         <div className="flex flex-1 flex-col justify-center">
           <input 
             type="text" 
             placeholder="What is happening?!" 
-            className="w-full bg-transparent text-lg text-slate-100 placeholder-slate-600 outline-none"
+            className="w-full bg-transparent text-lg text-text-primary placeholder:text-text-muted outline-none"
           />
-          <div className="mt-4 flex items-center justify-between border-t border-slate-800/60 pt-3">
-            <div className="flex gap-2 text-cyan-500">
-              <button className="rounded-full p-2 hover:bg-cyan-500/10 transition"><ImageIcon className="h-5 w-5" /></button>
-              <button className="rounded-full p-2 hover:bg-cyan-500/10 transition"><Smile className="h-5 w-5" /></button>
+          <div className="mt-4 flex items-center justify-between border-t border-border-primary pt-3">
+            <div className="flex gap-2 text-accent-primary">
+              <button className="rounded-full p-2 hover:bg-bg-tertiary transition"><ImageIcon className="h-5 w-5" /></button>
+              <button className="rounded-full p-2 hover:bg-bg-tertiary transition"><Smile className="h-5 w-5" /></button>
             </div>
-            <button className="rounded-full bg-cyan-500 px-5 py-1.5 text-sm font-bold text-slate-950 hover:bg-cyan-400 transition-colors">
+            <button className="rounded-full bg-accent-primary px-5 py-1.5 text-sm font-bold text-text-inverse hover:bg-accent-primary-hover transition-colors shadow-shadow-card">
               Post
             </button>
           </div>
@@ -111,8 +111,8 @@ export const HomeFeed: React.FC = () => {
       {/* Main Feed Content */}
       <div className="flex flex-col pb-20 md:pb-0">
         {activeTab === 'forYou' && (
-           <div className="flex items-center justify-center py-4 border-b border-slate-800/60 text-xs text-slate-500 gap-2">
-             <Sparkles className="h-3 w-3 text-cyan-500" /> Curated based on your interests
+           <div className="flex items-center justify-center py-4 border-b border-border-primary text-xs text-text-muted gap-2 bg-bg-secondary/50">
+             <Sparkles className="h-3 w-3 text-accent-primary" /> Curated based on your interests
            </div>
         )}
         
