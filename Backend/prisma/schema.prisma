@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model UserAuth {
+  id              Int            @id @default(autoincrement())
+  name            String
+  password        String
+  isAuthenticated String
+  email           String         @unique
+  createAt        DateTime       @default(now())
+  updateAt        DateTime       @updatedAt
+  userDetails     UserDetails?
+  posts           Posts[]
+  followers       Follow[]       @relation("Followers")
+  following       Follow[]       @relation("Following")
+  postComments    PostComments[]
+}
+
+model UserDetails {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  profileImage    String
+  backgroundImage String
+  Biodescription  String
+  location        String
+  joiningDate     String
+  handleUrl       String
+  createAt        DateTime @default(now())
+  updateAt        DateTime @updatedAt
+
+  User UserAuth @relation(fields: [userId], references: [id])
+}
+
+model Posts {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  description String
+  Images      String[]
+  videos      String[]
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  User UserAuth @relation(fields: [userId], references: [id])
+}
+
+model Follow {
+  id String @id @default(cuid())
+
+  followerId  Int
+  followingId Int
+
+  follower  UserAuth @relation("Followers", fields: [followerId], references: [id])
+  following UserAuth @relation("Following", fields: [followingId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+model PostComments {
+  id          String @id @default(cuid())
+  commenterId Int
+  message     String
+
+  CommentUser UserAuth @relation(fields: [commenterId], references: [id])
+}
+
+
+
+
