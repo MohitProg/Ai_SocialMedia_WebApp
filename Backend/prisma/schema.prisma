@@ -12,19 +12,27 @@ datasource db {
   provider = "postgresql"
 }
 
+// model for user perspective 
+
 model UserAuth {
-  id              Int            @id @default(autoincrement())
-  name            String
-  password        String
-  isAuthenticated String
-  email           String         @unique
-  createAt        DateTime       @default(now())
-  updateAt        DateTime       @updatedAt
-  userDetails     UserDetails?
-  posts           Posts[]
-  followers       Follow[]       @relation("Followers")
-  following       Follow[]       @relation("Following")
-  postComments    PostComments[]
+  id                    Int                  @id @default(autoincrement())
+  name                  String
+  password              String
+  isAuthenticated       String
+  email                 String               @unique
+  createdAt             DateTime             @default(now())
+  updateAt              DateTime             @updatedAt
+  userDetails           UserDetails?
+  posts                 Posts[]
+  followers             Follow[]             @relation("Followers")
+  following             Follow[]             @relation("Following")
+  postComments          PostComments[]
+  likeDislikeComments   LikeDislikeComment[]
+  NotificationRecipient Notification[]       @relation("NotificationRecipient")
+  NotificationActor     Notification[]       @relation("NotificationActor")
+
+  sentMessages     Message[] @relation("MessageSender")
+  receivedMessages Message[] @relation("MessageReceiver")
 }
 
 model UserDetails {
@@ -36,46 +44,129 @@ model UserDetails {
   location        String
   joiningDate     String
   handleUrl       String
-  createAt        DateTime @default(now())
+  createdAt       DateTime @default(now())
   updateAt        DateTime @updatedAt
 
-  User UserAuth @relation(fields: [userId], references: [id])
+  User UserAuth @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+// model for post perspective 
 model Posts {
   id          Int      @id @default(autoincrement())
   userId      Int
   description String
   Images      String[]
   videos      String[]
-  createAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
 
-  User UserAuth @relation(fields: [userId], references: [id])
+  User          UserAuth       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postComments  PostComments[]
+  notifications Notification[]
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
 }
 
+// model for post comment perspective 
+model PostComments {
+  id          Int    @id @default(autoincrement())
+  postId      Int
+  commenterId Int
+  message     String
+
+  Post                Posts                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt           DateTime             @default(now())
+  updateAt            DateTime             @updatedAt
+  CommentUser         UserAuth             @relation(fields: [commenterId], references: [id], onDelete: Cascade)
+  likeDislikeComments LikeDislikeComment[]
+  notifications       Notification[]
+
+  @@index([postId, createdAt])
+  @@index([createdAt])
+}
+
+// model for post dislike and like perspective 
+model LikeDislikeComment {
+  id                 Int          @id @default(autoincrement())
+  commentId          Int
+  userId             Int
+  LikeAndDislikeUser UserAuth     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  PostComment        PostComments @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  createdAt          DateTime     @default(now())
+  updateAt           DateTime     @updatedAt
+}
+
+// model for user follow and unfollow perspective 
 model Follow {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   followerId  Int
   followingId Int
 
-  follower  UserAuth @relation("Followers", fields: [followerId], references: [id])
-  following UserAuth @relation("Following", fields: [followingId], references: [id])
+  follower  UserAuth @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following UserAuth @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
   @@unique([followerId, followingId])
+  @@index([followingId])
 }
 
-model PostComments {
-  id          String @id @default(cuid())
-  commenterId Int
-  message     String
+// model for notification perspective  type for notifications is 
+// Like, comment ,new post , or comment like 
 
-  CommentUser UserAuth @relation(fields: [commenterId], references: [id])
+enum NotificationType {
+  FOLLOW
+  LIKE_POST
+  LIKE_COMMENT
+  COMMENT
 }
 
+model Notification {
+  id        Int              @id @default(autoincrement())
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
 
+  // Who receives this notification
+  recipient   UserAuth @relation("NotificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  recipientId Int
 
+  // Who triggered it (the follower, the liker, the commenter)
+  actor   UserAuth @relation("NotificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+  actorId Int
 
+  // Optional links to the relevant entity, depending on type
+  post   Posts? @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int?
+
+  comment   PostComments? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId Int?
+
+  @@index([recipientId, isRead])
+  @@index([recipientId, createdAt])
+}
+
+// model for chats between users 
+
+model Message {
+  id      Int     @id @default(autoincrement())
+  content String?
+  file    String?
+  image   String?
+
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sender   UserAuth @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId Int
+
+  receiver   UserAuth @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId Int
+
+  @@index([senderId, receiverId])
+  @@index([receiverId, isRead])
+  @@index([createdAt])
+}
