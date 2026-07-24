@@ -6,10 +6,11 @@ CREATE TABLE "UserAuth" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "isAuthenticated" TEXT NOT NULL,
+    "isAuthenticated" BOOLEAN NOT NULL DEFAULT false,
     "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3) NOT NULL,
+    "otp" INTEGER,
 
     CONSTRAINT "UserAuth_pkey" PRIMARY KEY ("id")
 );
@@ -22,8 +23,8 @@ CREATE TABLE "UserDetails" (
     "backgroundImage" TEXT NOT NULL,
     "Biodescription" TEXT NOT NULL,
     "location" TEXT NOT NULL,
-    "joiningDate" TEXT NOT NULL,
-    "handleUrl" TEXT NOT NULL,
+    "joiningDate" TEXT,
+    "handleUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3) NOT NULL,
 
@@ -41,6 +42,17 @@ CREATE TABLE "Posts" (
     "updateAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Posts_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PostLikes" (
+    "id" SERIAL NOT NULL,
+    "postId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updateAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PostLikes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -118,6 +130,12 @@ CREATE INDEX "Posts_userId_createdAt_idx" ON "Posts"("userId", "createdAt");
 CREATE INDEX "Posts_createdAt_idx" ON "Posts"("createdAt");
 
 -- CreateIndex
+CREATE INDEX "PostLikes_postId_userId_idx" ON "PostLikes"("postId", "userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PostLikes_postId_userId_key" ON "PostLikes"("postId", "userId");
+
+-- CreateIndex
 CREATE INDEX "PostComments_postId_createdAt_idx" ON "PostComments"("postId", "createdAt");
 
 -- CreateIndex
@@ -149,6 +167,12 @@ ALTER TABLE "UserDetails" ADD CONSTRAINT "UserDetails_userId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Posts" ADD CONSTRAINT "Posts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "UserAuth"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PostLikes" ADD CONSTRAINT "PostLikes_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PostLikes" ADD CONSTRAINT "PostLikes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "UserAuth"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PostComments" ADD CONSTRAINT "PostComments_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;

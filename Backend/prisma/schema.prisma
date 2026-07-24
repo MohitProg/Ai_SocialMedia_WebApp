@@ -18,11 +18,12 @@ model UserAuth {
   id                    Int                  @id @default(autoincrement())
   name                  String
   password              String
-  isAuthenticated       String
+  isAuthenticated       Boolean              @default(false)
   email                 String               @unique
   createdAt             DateTime             @default(now())
   updateAt              DateTime             @updatedAt
   userDetails           UserDetails?
+  otp                   Int?
   posts                 Posts[]
   followers             Follow[]             @relation("Followers")
   following             Follow[]             @relation("Following")
@@ -31,8 +32,9 @@ model UserAuth {
   NotificationRecipient Notification[]       @relation("NotificationRecipient")
   NotificationActor     Notification[]       @relation("NotificationActor")
 
-  sentMessages     Message[] @relation("MessageSender")
-  receivedMessages Message[] @relation("MessageReceiver")
+  sentMessages     Message[]   @relation("MessageSender")
+  receivedMessages Message[]   @relation("MessageReceiver")
+  postLikes        PostLikes[]
 }
 
 model UserDetails {
@@ -42,8 +44,8 @@ model UserDetails {
   backgroundImage String
   Biodescription  String
   location        String
-  joiningDate     String
-  handleUrl       String
+  joiningDate     String?
+  handleUrl       String?
   createdAt       DateTime @default(now())
   updateAt        DateTime @updatedAt
 
@@ -63,9 +65,24 @@ model Posts {
   User          UserAuth       @relation(fields: [userId], references: [id], onDelete: Cascade)
   postComments  PostComments[]
   notifications Notification[]
+  postLikes     PostLikes[]
 
   @@index([userId, createdAt])
   @@index([createdAt])
+}
+
+model PostLikes {
+  id     Int @id @default(autoincrement())
+  postId Int
+  userId Int
+
+  Posts          Posts    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  PostsLikeUsers UserAuth @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updateAt       DateTime @updatedAt
+
+  @@unique([postId, userId])
+  @@index([postId, userId])
 }
 
 // model for post comment perspective 
@@ -169,4 +186,12 @@ model Message {
   @@index([senderId, receiverId])
   @@index([receiverId, isRead])
   @@index([createdAt])
+}
+
+model Postbookmarks {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
